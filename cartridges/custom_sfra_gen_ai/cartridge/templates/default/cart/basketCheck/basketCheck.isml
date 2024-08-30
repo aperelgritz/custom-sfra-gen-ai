@@ -1,0 +1,48 @@
+<div>
+  <isif condition="${!pdict.success}">
+    <div class="container cart-empty">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h3>${pdict.data}</h3>
+        </div>
+      </div>
+    </div>
+<iselse/>
+    <div class="container-md">
+      <p>Here are some products you ordered before. Feel free to add them to basket!</p>
+      <isloop items="${pdict.data.missingProducts}" var="item">
+        <div class="card product-info" style="display: flex; flex-direction: row; justify-content: space-between;">
+          <div style="display: flex; flex-direction: row;">
+            <div class="item-image">
+              <img class="product-image" src="${item.productImage}">
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <div class="line-item-name" style="width: 100%;">${item.productName}</div>
+              <div class="price">${item.productPrice}</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+              <label for="quantity-1" style="margin-bottom: 0;">Quantity</label>
+              <select class="quantity-select custom-select form-control" id="quantity-1">
+                <option value="1"
+                  data-url="/on/demandware.store/Sites-RefArchGlobal-Site/en_GB/Product-Variation?pid=${item.productId}&amp;quantity=1"
+                  selected="">
+                  1
+                </option>
+              </select>
+            </div>
+            <div>
+              <input type="hidden" class="add-to-cart-url"
+                value="/on/demandware.store/Sites-RefArchGlobal-Site/en_GB/Cart-AddProduct">
+              <button class="add-to-cart-basket-check btn btn-primary" data-pid="${item.productId}">
+                <i class="fa fa-shopping-bag"></i>
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </isloop>
+    </div>
+  </isif>
+</div>

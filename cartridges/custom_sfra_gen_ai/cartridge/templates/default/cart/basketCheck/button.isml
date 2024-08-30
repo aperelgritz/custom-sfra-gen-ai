@@ -1,0 +1,7 @@
+<div class="mb-sm-3">
+    <a id="basket-check" href="${URLUtils.https('BasketCheck-Start')}"
+        class="btn btn-primary btn-block checkout-continue ${pdict.valid.error ? 'disabled' : ''}" role="button"
+        data-toggle="modal" data-target="#quickViewModal">
+        Check my Basket
+    </a>
+</div>
