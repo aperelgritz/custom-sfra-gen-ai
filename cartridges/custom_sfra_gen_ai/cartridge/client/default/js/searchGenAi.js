@@ -303,6 +303,32 @@ function handleSearchInput() {
 	});
 }
 
+// Alexis custom
+function handleGiftFinderInput() {
+	$('input.giftfinder-field').on('keypress', function (e) {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+
+			if ($(this).data('handled')) {
+				return;
+			}
+			// Set the handled flag to true
+			$(this).data('handled', true);
+
+			$.spinner().start();
+
+			var endpointGiftFinder = $('.giftfinder-url').data('url');
+
+			var url =
+				window.location.origin +
+				endpointGiftFinder +
+				encodeURIComponent($(this).val());
+			window.location.href = url;
+		}
+	});
+}
+
 module.exports = {
 	handleSearchInput: handleSearchInput,
+	handleGiftFinderInput: handleGiftFinderInput,
 };
