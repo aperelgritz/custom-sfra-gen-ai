@@ -11,11 +11,9 @@ function decodeHtmlEntities(str) {
 		.replace(/&#39;/g, "'");
 }
 
-function callGiftFinderPrompt(userQuery) {
+function callGiftFinderPrompt(userQuery, promptTemplate) {
 	var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 	var oauthUtils = require('*/cartridge/scripts/sfOauth');
-
-	// var promptTemplate = getPromptTemplateName();
 
 	try {
 		var oauthToken = oauthUtils.getOAuthToken();
@@ -24,7 +22,7 @@ function callGiftFinderPrompt(userQuery) {
 			'salesforce.connect.rest',
 			{
 				createRequest: function (svc, params) {
-					svc.setURL(svc.getURL() + `/Gift_Finder/generations`);
+					svc.setURL(svc.getURL() + `/${promptTemplate}/generations`);
 					svc.setRequestMethod('POST');
 					svc.addHeader('Authorization', 'Bearer ' + oauthToken);
 					svc.addHeader('Content-Type', 'application/json');

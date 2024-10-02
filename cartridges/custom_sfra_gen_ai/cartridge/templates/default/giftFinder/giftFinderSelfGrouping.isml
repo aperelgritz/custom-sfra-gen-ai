@@ -1,5 +1,9 @@
 <isdecorate template="common/layout/page">
-  <h1 class="page-title">Gift Finder</h1>
+  <isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/productTile.js');
+  </isscript>
+  <h1 class="page-title">Gift Finder Self-Grouping</h1>
   <div class="site-search" style="width:60%; margin: 0 auto;">
     <form role="search" action="${URLUtils.url('GiftFinder-Start')}" method="get" name="simpleSearch">
       <input class="form-control giftfinder-field" type="text" name="q" value=""
@@ -12,7 +16,7 @@
       <button type="submit" name="search-button" class="fa fa-search"
         aria-label="${Resource.msg('label.header.search.go', 'common', null)}"></button>
       <!-- Alexis custom - Added div below -->
-      <div class="giftfinder-url" data-url="${URLUtils.url('GiftFinder-Query', 'q')}"></div>
+      <div class="giftfinder-url" data-url="${URLUtils.url('GiftFinder-QuerySelfGrouping', 'q')}"></div>
       <input type="hidden" value="${pdict.locale}" name="lang">
     </form>
   </div>
@@ -23,85 +27,73 @@
         <p>Results for <b>${request.httpParameterMap.q.value}</b></p>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
-        <h2 class="title">Affordable Recommendations</h2>
-      </div>
-      <isif condition="${pdict.budgetUnder30.products.length !== 0}">
-        <p>${pdict.budgetUnder30.text}</p>
+    <isif condition="${pdict.groupOne.products.length !== 0}">
+      <div class="container">
+        <div class="row">
+          <h2 class="title">${pdict.groupOne.groupName}</h2>
+        </div>
+        <p>${pdict.groupOne.text}</p>
         <div class="recommendations">
           <div class="value content">
             <div class="row product-grid">
-              <isloop items="${pdict.budgetUnder30.products}" var="pid">
+              <isloop items="${pdict.groupOne.products}" var="pid">
                 <isobject object="${pid}" view="recommendation">
                   <div class="col-4 col-sm-3">
                     <isinclude
-                      url="${URLUtils.url('Tile-Show', 'pid', pid, 'swatches', true, 'ratings', false, 'showQuickView', false)}" />
+                      url="${URLUtils.url('Tile-Show', 'pid', pid, 'swatches', true, 'ratings', false, 'showQuickView', true)}" />
                   </div>
                 </isobject>
               </isloop>
             </div>
           </div>
         </div>
-        <iselse>
-          <div class="row">
-            <p>No products found</p>
-          </div>
-      </isif>
-    </div>
+      </div>
+    </isif>
 
-    <div class="container">
-      <div class="row">
-        <h2 class="title">Mid-Range Recommendations</h2>
-      </div>
-      <isif condition="${pdict.budget30to70.products.length !== 0}">
-        <p>${pdict.budget30to70.text}</p>
+    <isif condition="${pdict.groupTwo.products.length !== 0}">
+      <div class="container">
+        <div class="row">
+          <h2 class="title">${pdict.groupTwo.groupName}</h2>
+        </div>
+        <p>${pdict.groupTwo.text}</p>
         <div class="recommendations">
           <div class="value content">
             <div class="row product-grid">
-              <isloop items="${pdict.budget30to70.products}" var="pid">
+              <isloop items="${pdict.groupTwo.products}" var="pid">
                 <isobject object="${pid}" view="recommendation">
                   <div class="col-4 col-sm-3">
                     <isinclude
-                      url="${URLUtils.url('Tile-Show', 'pid', pid, 'swatches', true, 'ratings', false, 'showQuickView', false)}" />
+                      url="${URLUtils.url('Tile-Show', 'pid', pid, 'swatches', true, 'ratings', false, 'showQuickView', true)}" />
                   </div>
                 </isobject>
               </isloop>
             </div>
           </div>
         </div>
-        <iselse>
-          <div class="row">
-            <p>No products found</p>
-          </div>
-      </isif>
-    </div>
+      </div>
+    </isif>
 
-    <div class="container">
-      <div class="row">
-        <h2 class="title">Premium Recommendations</h2>
-      </div>
-      <isif condition="${pdict.budgetOver70.products.length !== 0}">
-        <p>${pdict.budgetOver70.text}</p>
+    <isif condition="${pdict.groupThree.products.length !== 0}">
+      <div class="container">
+        <div class="row">
+          <h2 class="title">${pdict.groupThree.groupName}</h2>
+        </div>
+        <p>${pdict.groupThree.text}</p>
         <div class="recommendations">
           <div class="value content">
             <div class="row product-grid">
-              <isloop items="${pdict.budgetOver70.products}" var="pid">
+              <isloop items="${pdict.groupThree.products}" var="pid">
                 <isobject object="${pid}" view="recommendation">
                   <div class="col-4 col-sm-3">
                     <isinclude
-                      url="${URLUtils.url('Tile-Show', 'pid', pid, 'swatches', true, 'ratings', false, 'showQuickView', false)}" />
+                      url="${URLUtils.url('Tile-Show', 'pid', pid, 'swatches', true, 'ratings', false, 'showQuickView', true)}" />
                   </div>
                 </isobject>
               </isloop>
             </div>
           </div>
         </div>
-        <iselse>
-          <div class="row">
-            <p>No products found</p>
-          </div>
-      </isif>
-    </div>
+      </div>
+    </isif>
   </isif>
 </isdecorate>
