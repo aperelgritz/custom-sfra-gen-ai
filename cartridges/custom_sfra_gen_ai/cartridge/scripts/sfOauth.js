@@ -32,15 +32,27 @@ function getOAuthToken() {
 
 	var service = LocalServiceRegistry.createService('salesforce.oauth', {
 		createRequest: function (svc) {
+			var svcCredential = svc.getConfiguration().getCredential();
+			if (
+				empty(svcCredential.getUser()) ||
+				empty(svcCredential.getPassword()) ||
+				empty(svcCredential.custom.genAiClientId) ||
+				empty(svcCredential.custom.genAiClientSecret)
+			) {
+				throw new Error(
+					'Service configuration requires valid username, password, client ID and client secret'
+				);
+			}
+
 			svc.setRequestMethod('POST');
 			svc.setAuthentication('NONE');
 			svc.addHeader('Content-Type', 'application/x-www-form-urlencoded');
 			svc.addHeader('Accept', 'application/json');
 			svc.addParam('grant_type', 'password');
-			svc.addParam('username', genAiConfig.orgUsername);
-			svc.addParam('password', genAiConfig.orgUserPassword);
-			svc.addParam('client_id', genAiConfig.orgClientId);
-			svc.addParam('client_secret', genAiConfig.orgClientSecret);
+			svc.addParam('username', svcCredential.getUser());
+			svc.addParam('password', svcCredential.getPassword());
+			svc.addParam('client_id', svcCredential.custom.genAiClientId);
+			svc.addParam('client_secret', svcCredential.custom.genAiClientSecret);
 		},
 		parseResponse: function (svc, response) {
 			return JSON.parse(response.text);
