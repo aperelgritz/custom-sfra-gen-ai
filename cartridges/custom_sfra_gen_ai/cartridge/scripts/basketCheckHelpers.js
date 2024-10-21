@@ -51,31 +51,6 @@ function getCondensedBasket(basket) {
 	return basketJson;
 }
 
-function escapeAndStringifyJson(json) {
-	let stringifiedJson = JSON.stringify(json);
-	let safeString = stringifiedJson.replace(/[\&\<\>\'\"\/]/g, function (char) {
-		return {
-			'&': '\\&',
-			'<': '\\<',
-			'>': '\\>',
-			'"': '\\"',
-			"'": "\\'",
-			'/': '\\/',
-		}[char];
-	});
-
-	return safeString;
-}
-
-function decodeHtmlEntities(str) {
-	return str
-		.replace(/&quot;/g, '"')
-		.replace(/&amp;/g, '&')
-		.replace(/&lt;/g, '<')
-		.replace(/&gt;/g, '>')
-		.replace(/&#39;/g, "'");
-}
-
 function enrichMissingProducts(prodIds) {
 	// function enrichMissingProducts(prodsObj) {
 	var productIds = new ArrayList();
@@ -115,7 +90,5 @@ function enrichMissingProducts(prodIds) {
 module.exports = {
 	getCondensedOrders: getCondensedOrders,
 	getCondensedBasket: getCondensedBasket,
-	escapeAndStringifyJson: escapeAndStringifyJson,
-	decodeHtmlEntities: decodeHtmlEntities,
 	enrichMissingProducts: enrichMissingProducts,
 };

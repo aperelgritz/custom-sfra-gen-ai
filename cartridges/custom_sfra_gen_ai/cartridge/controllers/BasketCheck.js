@@ -7,6 +7,7 @@ var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var oauthUtils = require('*/cartridge/scripts/sfOauth');
+var genericGenAiHelpers = require('*/cartridge/scripts/genericGenAiHelpers');
 var basketCheckHelpers = require('*/cartridge/scripts/basketCheckHelpers');
 
 server.get('Start', server.middleware.https, function (req, res, next) {
@@ -57,9 +58,9 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 					svc.addHeader('Content-Type', 'application/json');
 
 					var safeBasket =
-						basketCheckHelpers.escapeAndStringifyJson(basketJson);
+						genericGenAiHelpers.escapeAndStringifyJson(basketJson);
 					var safePastOrders =
-						basketCheckHelpers.escapeAndStringifyJson(ordersJson);
+						genericGenAiHelpers.escapeAndStringifyJson(ordersJson);
 
 					// Replace this payload with your actual payload
 					var payload = JSON.stringify({
@@ -95,7 +96,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 		var result = service.call();
 
 		if (result.status === 'OK') {
-			const htmlDecoded = basketCheckHelpers.decodeHtmlEntities(
+			const htmlDecoded = genericGenAiHelpers.decodeHtmlEntities(
 				result.object.generations[0].text
 			);
 			const jsonObject = JSON.parse(htmlDecoded);

@@ -5,6 +5,8 @@ var Site = require('dw/system/Site');
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 var Transaction = require('dw/system/Transaction');
 
+var genAiConfig = require('*/cartridge/config/genAiConfig');
+
 /**
  * Get OAuth token from Salesforce
  * @returns {string} OAuth token
@@ -13,7 +15,7 @@ function getOAuthToken() {
 	// Get stored token
 	var tokenCustomObject = CustomObjectMgr.getCustomObject(
 		'SFGenAIAuth',
-		'RefArchGlobal'
+		Site.getCurrent().getID()
 	);
 	var accessToken, expirationTime;
 
@@ -35,22 +37,10 @@ function getOAuthToken() {
 			svc.addHeader('Content-Type', 'application/x-www-form-urlencoded');
 			svc.addHeader('Accept', 'application/json');
 			svc.addParam('grant_type', 'password');
-			svc.addParam('username', 'aperelgritz@rcg-ido-spring24.demo');
-			svc.addParam('password', 'W0c2K02Ece*g');
-			svc.addParam(
-				'client_id',
-				'3MVG9SOw8KERNN08QjNMFkqCpGKTN.m6wH1Q2LQWOViFBLZf4BoPYnaeloHoU35820qoGJWLNCaV0VaeB1nWK'
-			);
-			svc.addParam(
-				'client_secret',
-				'8063D39369E69213FA5E92729615C77967BB4AD17EB65E7F9962F3EA91639C9C'
-			);
-
-			// var clientId = Site.getCurrent().getCustomPreferenceValue('clientId');
-			// var clientSecret =
-			// 	Site.getCurrent().getCustomPreferenceValue('clientSecret');
-			// var username = Site.getCurrent().getCustomPreferenceValue('username');
-			// var password = Site.getCurrent().getCustomPreferenceValue('password');
+			svc.addParam('username', genAiConfig.orgUsername);
+			svc.addParam('password', genAiConfig.orgUserPassword);
+			svc.addParam('client_id', genAiConfig.orgClientId);
+			svc.addParam('client_secret', genAiConfig.orgClientSecret);
 		},
 		parseResponse: function (svc, response) {
 			return JSON.parse(response.text);
@@ -71,7 +61,7 @@ function getOAuthToken() {
 			if (!tokenCustomObject) {
 				tokenCustomObject = CustomObjectMgr.createCustomObject(
 					'SFGenAIAuth',
-					'RefArchGlobal'
+					Site.getCurrent().getID()
 				);
 			}
 			tokenCustomObject.custom.accessToken = accessToken;

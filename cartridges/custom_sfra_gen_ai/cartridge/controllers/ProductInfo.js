@@ -2,6 +2,7 @@
 
 var server = require('server');
 
+// Get Price, Colors, Sizes to enrich Catalog CSV with a Python script
 server.get('Get', function (req, res, next) {
 	var ProductMgr = require('dw/catalog/ProductMgr');
 	var Currency = require('dw/util/Currency');

@@ -3,12 +3,14 @@
 var server = require('server');
 server.extend(module.superModule);
 
-var Logger = require('dw/system/Logger');
+var genAiConfig = require('*/cartridge/config/genAiConfig');
+var genericGenAiHelpers = require('*/cartridge/scripts/genericGenAiHelpers');
 
 server.get('GenAI', function (req, res, next) {
 	var searchGenAiHelpers = require('*/cartridge/scripts/searchGenAiHelpers');
 
-	var startTime = new Date();
+	// Log search query and response time
+	var startTime = genAiConfig.logGenAiSearchPerf ? new Date() : null;
 
 	var promptResParsed = searchGenAiHelpers.callNatLangSearchPrompt(
 		req.querystring.q
@@ -16,17 +18,8 @@ server.get('GenAI', function (req, res, next) {
 
 	var result = searchGenAiHelpers.searchIds(req, promptResParsed.products);
 
-	var endTime = new Date();
-	var responseTime = endTime - startTime; // time in milliseconds
-
-	// Log the query and response time
-	Logger.warn(
-		'Call to "Search-GenAI" with q="' +
-			req.querystring.q +
-			'". Response time: ' +
-			responseTime +
-			'ms'
-	);
+	// Log search query and response time
+	genericGenAiHelpers.logSearchPerformance(req.querystring.q, startTime);
 
 	res.render('search/searchResults', {
 		productSearch: result.productSearch,

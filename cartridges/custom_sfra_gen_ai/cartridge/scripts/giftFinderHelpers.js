@@ -1,15 +1,6 @@
 'use strict';
 
-var searchGenAiHelpers = require('*/cartridge/scripts/searchGenAiHelpers');
-
-function decodeHtmlEntities(str) {
-	return str
-		.replace(/&quot;/g, '"')
-		.replace(/&amp;/g, '&')
-		.replace(/&lt;/g, '<')
-		.replace(/&gt;/g, '>')
-		.replace(/&#39;/g, "'");
-}
+var genericGenAiHelpers = require('*/cartridge/scripts/genericGenAiHelpers');
 
 function callGiftFinderPrompt(userQuery, promptTemplate) {
 	var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
@@ -58,7 +49,9 @@ function callGiftFinderPrompt(userQuery, promptTemplate) {
 		var result = service.call();
 
 		if (result.status === 'OK') {
-			var promptRes = decodeHtmlEntities(result.object.generations[0].text);
+			var promptRes = genericGenAiHelpers.decodeHtmlEntities(
+				result.object.generations[0].text
+			);
 			var promptResParsed = JSON.parse(promptRes);
 			return promptResParsed;
 		} else {

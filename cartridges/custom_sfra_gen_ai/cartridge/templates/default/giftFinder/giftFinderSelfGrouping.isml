@@ -11,22 +11,27 @@
         aria-haspopup="listbox" aria-owns="search-results" aria-expanded="false" aria-autocomplete="list"
         aria-activedescendant="" aria-controls="search-results"
         aria-label="${Resource.msg('simplesearch.searchtext', 'common', null)}" autocomplete="off" />
+
       <button type="reset" name="reset-button" class="fa fa-times reset-button d-none"
         aria-label="${Resource.msg('label.header.search.clear', 'common', null)}"></button>
+
       <button type="submit" name="search-button" class="fa fa-search"
         aria-label="${Resource.msg('label.header.search.go', 'common', null)}"></button>
-      <!-- Alexis custom - Added div below -->
+
       <div class="giftfinder-url" data-url="${URLUtils.url('GiftFinder-QuerySelfGrouping', 'q')}"></div>
       <input type="hidden" value="${pdict.locale}" name="lang">
     </form>
   </div>
 
   <isif condition="${!empty(request.httpParameterMap.q.value)}">
+    <iscomment>Results count & query</iscomment>
     <div class="row grid-header" style="justify-content: center;">
       <div class="result-count text-center">
         <p>Results for <b>${request.httpParameterMap.q.value}</b></p>
       </div>
     </div>
+
+    <iscomment>Recommendation Group One</iscomment>
     <isif condition="${pdict.groupOne.products.length !== 0}">
       <div class="container">
         <div class="row">
@@ -50,6 +55,7 @@
       </div>
     </isif>
 
+    <iscomment>Recommendation Group Two</iscomment>
     <isif condition="${pdict.groupTwo.products.length !== 0}">
       <div class="container">
         <div class="row">
@@ -73,6 +79,7 @@
       </div>
     </isif>
 
+    <iscomment>Recommendation Group Three</iscomment>
     <isif condition="${pdict.groupThree.products.length !== 0}">
       <div class="container">
         <div class="row">
