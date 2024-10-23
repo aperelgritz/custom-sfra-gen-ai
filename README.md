@@ -55,7 +55,7 @@ English and additional languages are supported as described here: https://help.s
 
 ### Commerce Cloud
 
-Deploy System Object Extensions, Custom Objects and Service definition:
+**Deploy System Object Extensions, Custom Objects and Service definition:**
 
 - Connect to Business Manager
 - Go to Administration > Site Development > Site Import & Export
@@ -64,7 +64,7 @@ Deploy System Object Extensions, Custom Objects and Service definition:
 - In the list of files, click the radio button next to `genai-configurations.zip`
 - Click "Import"
 
-Deploy the cartridge:
+**Deploy the cartridge:**
 
 - Upload the cartridge `custom_sfra_gen_ai` to the WebDAV share containing your SFRA cartridges (eg. `SFRA_v701`).
 - In Business Manager, go to Administration > Sites > Manage Sites
@@ -74,9 +74,9 @@ Deploy the cartridge:
 
 ### Salesforce Core
 
-Create a Connected App:
-Go to Setup > App Manager > Create Connected App:
+**Create a Connected App:**
 
+- Go to Setup > App Manager > Create Connected App:
 - Name: Commerce Cloud Prompt Templates
 - API name: Commerce_Cloud_Prompt_Templates
 - Enable OAuth Settings: checked
@@ -90,3 +90,10 @@ Go to Setup > App Manager > Create Connected App:
 - Require Secret for Web Server Flow: checked
 - Require Secret for Refresh Token Flow: unchecked
 - Save
+
+**Create the Prompt Template:**
+
+- Follow the instructions in `custom_sfra_gen_ai/assets`:
+  - `Create-Prompt-Basket-Check.md`
+  - `Create-Prompt-Gift-Finder-Self-Grouping.md`
+  - `Create-Prompt-Natural-Language-Search.md`
